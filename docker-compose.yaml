@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  # external-api.yamlに記載したAPI定義をMockサーバーで起動する設定
+  prism:
+    image: stoplight/prism:5.7.0
+    command: 'mock -h 0.0.0.0 /tmp/external-api.yaml'
+    volumes:
+      # roはread-onlyの効果
+      - ./external-api.yaml:/tmp/external-api.yaml:ro
+    ports:
+      # mockのデフォルトのport番号は4010
+      - "4010:4010"
